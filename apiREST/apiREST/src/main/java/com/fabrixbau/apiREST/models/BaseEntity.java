@@ -1,12 +1,14 @@
 package com.fabrixbau.apiREST.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.Date;
 
 @MappedSuperclass
 public class BaseEntity {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
@@ -24,10 +26,6 @@ public class BaseEntity {
         if (createdDate == null) {
             createdDate = new Date();
         }
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void setId(long id) {

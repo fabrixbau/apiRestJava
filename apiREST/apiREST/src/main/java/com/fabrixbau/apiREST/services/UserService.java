@@ -1,9 +1,13 @@
 package com.fabrixbau.apiREST.services;
 
+import com.fabrixbau.apiREST.dao.UserDao;
 import com.fabrixbau.apiREST.models.User;
-import com.fabrixbau.apiREST.dao.UserRepository;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -11,25 +15,37 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserDao userDao;
 
     public List<User> getAll() {
-        return userRepository.findAll();
+        return userDao.getAll();
     }
 
     public User get(long id) {
-        return userRepository.findById(id).orElse(null);
+        return userDao.get(id);
     }
 
-    public User post(User user) {
-        return userRepository.save(user);
+    public void post(User user) {
+        String hash = generarHash(user.getPassword());
+        user.setPassword(hash);
+        userDao.post(user);
     }
 
-    public User update(User user) {
-        return userRepository.save(user);
+    public User update(@RequestBody User user) {
+        return userDao.update(user);
     }
 
-    public void delete(long id) {
-        userRepository.deleteById(id);
+    public void delete(@PathVariable long id) {
+        userDao.delete(id);
     }
+
+    private String generarHash(String password) {
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+        return argon2.hash(1, 1024 * 1, 1, password);
+    }
+
+    public User login(User user) {
+        return userDao.login(user);
+    }
+
 }

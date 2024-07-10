@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/apiREST/apiREST/apiREST.iml" filepath="$PROJECT_DIR$/apiREST/apiREST/apiREST.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/apirest-java.iml" filepath="$PROJECT_DIR$/.idea/apirest-java.iml" />
-    </modules>
-  </component>
-</project>

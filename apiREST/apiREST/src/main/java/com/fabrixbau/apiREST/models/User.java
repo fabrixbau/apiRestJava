@@ -23,7 +23,7 @@ public class User extends BaseEntity {
     @Getter @Setter
     private Role role;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password")
     @Getter @Setter
     private String password;
